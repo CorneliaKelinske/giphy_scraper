@@ -1,7 +1,7 @@
 defmodule GiphyScraper.GiphyGetter do
   alias GiphyScraper.GiphyImage
 
-  def query_giphy_api_and_turn_json_results_into_the_nice_image_struct(query, limit \\ 25) do
+  def query_api_and_decode_image_list_from_json_response(query, limit \\ 25) do
     with {:ok, body} <- get_gifs(query, limit),
          {:ok, data} <- decode_json(body) do
       {:ok, map_to_image_struct(data)}
@@ -17,7 +17,6 @@ defmodule GiphyScraper.GiphyGetter do
            params: [api_key: api_key(), q: query, limit: limit]
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
-      {:ok, %HTTPoison.Response{status_code: 404}} -> {:error, :not_found}
       {:ok, %HTTPoison.Response{status_code: 403}} -> {:error, :wrong_api_key}
       error -> {:error, error}
     end

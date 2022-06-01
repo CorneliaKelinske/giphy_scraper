@@ -6,5 +6,5 @@ defmodule GiphyScraper do
 
   defdelegate search(query, limit \\ 25),
     to: GiphyGetter,
-    as: :query_giphy_api_and_turn_json_results_into_the_nice_image_struct
+    as: :query_api_and_decode_image_list_from_json_response
 end
