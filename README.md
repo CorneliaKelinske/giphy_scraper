@@ -1,22 +1,28 @@
 # GiphyScraper
 
-**TODO: Add description**
+##  How to run this GiphyScraper
 
-## Installation
+Install direnv
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `giphy_scraper` to your list of dependencies in `mix.exs`:
+```
+sudo apt install direnv
+```
+(on Ubuntu Linux)
 
-```elixir
-def deps do
-  [
-    {:giphy_scraper, "~> 0.1.0"}
-  ]
-end
+Create an .envrc file in the root of your project and put in your api key:
+
+```
+echo export API_KEY="XXXXXXXXX" > .envrc
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/giphy_scraper>.
+Allow direnv
 
-# giphy_scraper
+```
+direnv allow
+```
+
+Reload the terminal and run the project
+
+```
+iex -S mix
+```
