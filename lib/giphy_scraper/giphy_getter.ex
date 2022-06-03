@@ -1,7 +1,6 @@
 defmodule GiphyScraper.GiphyGetter do
   @moduledoc false
 
-
   @type error :: :wrong_api_key | :not_decoded | String.t()
 
   @spec query_api_and_decode_json_response(String.t(), pos_integer()) ::
@@ -9,10 +8,9 @@ defmodule GiphyScraper.GiphyGetter do
   def query_api_and_decode_json_response(query, limit \\ 25) do
     with {:ok, body} <- request_gifs(query, limit),
          {:ok, data} <- decode_json(body) do
-          {:ok, data}
+      {:ok, data}
     end
   end
-
 
   defp request_gifs(query, limit) do
     case HTTPoison.get("api.giphy.com/v1/gifs/search", [],
@@ -34,6 +32,4 @@ defmodule GiphyScraper.GiphyGetter do
       _ -> {:error, :not_decoded}
     end
   end
-
-
 end
