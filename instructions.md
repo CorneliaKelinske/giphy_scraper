@@ -23,3 +23,13 @@ I recommend using the HTTPoison module to make the requests and you can find the
 
 
 Note: the naming of `GiphyScraper` and `GiphyImage` are up to you to determine. 
+
+
+G
+Very clean code Cornelia! Great work. One area you could improve is the flow of how the struct gets called. We can do this by instead of calling the struct inside the GiphyGetter, moving up our logic so we call the GiphyGetter fetch in GiphyScraper, then turn it into a GiphyImage in GiphyScraper. This way the top level module acts as a combiner for the two submodules. 
+
+https://dev.to/miros/mixing-clean-architecture-428c
+
+Great work overall though!! Nice to see specs on public functions.
+
+Cheers,
