@@ -1,7 +1,12 @@
 defmodule GiphyScraper.GiphyGetter do
   @moduledoc false
 
+  alias GiphyScraper.FinchHelpers
+
   @type error :: :wrong_api_key | :not_decoded | String.t()
+
+  @url "https://api.giphy.com/v1/gifs/search"
+  @params %{api_key: nil, q: nil, limit: nil}
 
   @spec query_api_and_decode_json_response(String.t(), pos_integer()) ::
           {:ok, map} | {:error, error()}
@@ -13,11 +18,12 @@ defmodule GiphyScraper.GiphyGetter do
   end
 
   defp request_gifs(query, limit) do
-    case HTTPoison.get("api.giphy.com/v1/gifs/search", [],
-           params: [api_key: api_key(), q: query, limit: limit]
-         ) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, body}
-      {:ok, %HTTPoison.Response{status_code: 403}} -> {:error, :wrong_api_key}
+    %{@params | api_key: api_key(), q: query, limit: limit}
+    |> FinchHelpers.build_query(@url)
+    |> Finch.request(GiphyScraper.Finch)
+    |> case do
+      {:ok, %Finch.Response{status: 200, body: body}} -> {:ok, body}
+      {:ok, %Finch.Response{status: 401}} -> {:error, :api_key_not_found}
       error -> {:error, inspect(error)}
     end
   end

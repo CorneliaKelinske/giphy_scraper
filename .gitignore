@@ -26,3 +26,4 @@ giphy_scraper-*.tar
 /tmp/
 
 .envrc
+.elixir_ls
