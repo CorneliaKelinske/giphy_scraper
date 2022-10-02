@@ -8,7 +8,7 @@ defmodule GiphyScraper.Application do
       {Finch, name: GiphyScraper.Finch}
     ]
 
-    opts = [strategy: :one_for_one, name: ForzaFootball.Supervisor]
+    opts = [strategy: :one_for_one, name: GiphyScraper.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
