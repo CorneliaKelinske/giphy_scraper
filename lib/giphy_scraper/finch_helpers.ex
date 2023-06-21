@@ -14,11 +14,11 @@ defmodule GiphyScraper.FinchHelpers do
     |> then(fn x -> Finch.build(:get, x) end)
   end
 
-  def append_params(query, []) do
+  defp append_params(query, []) do
     query
   end
 
-  def append_params(query, params) do
+  defp append_params(query, params) do
     Enum.reduce(params, "#{query}?", fn {k, v}, acc -> acc <> "#{k}=#{v}&" end)
   end
 end

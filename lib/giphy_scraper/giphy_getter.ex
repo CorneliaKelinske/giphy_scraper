@@ -11,9 +11,8 @@ defmodule GiphyScraper.GiphyGetter do
   @spec query_api_and_decode_json_response(String.t(), pos_integer()) ::
           {:ok, map} | {:error, error()}
   def query_api_and_decode_json_response(query, limit \\ 25) do
-    with {:ok, body} <- request_gifs(query, limit),
-         {:ok, data} <- decode_json(body) do
-      {:ok, data}
+    with {:ok, body} <- request_gifs(query, limit) do
+      decode_json(body)
     end
   end
 
