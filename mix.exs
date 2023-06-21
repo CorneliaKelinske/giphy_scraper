@@ -6,6 +6,7 @@ defmodule GiphyScraper.MixProject do
       app: :giphy_scraper,
       version: "0.1.0",
       elixir: "~> 1.13",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       preferred_cli_env: [
@@ -30,6 +31,9 @@ defmodule GiphyScraper.MixProject do
     ]
   end
 
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -39,7 +43,8 @@ defmodule GiphyScraper.MixProject do
       {:ex_check, "~> 0.14.0", only: :dev, runtime: false},
       {:credo, "~> 1.6", only: [:test, :dev], runtime: false},
       {:blitz_credo_checks, "~> 0.1", only: [:test, :dev], runtime: false},
-      {:finch, "~> 0.13.0"}
+      {:finch, "~> 0.13.0"},
+      {:sandbox_registry, "~> 0.1.1"}
     ]
   end
 end
