@@ -1,4 +1,7 @@
 # GiphyScraper
+[![Dialyzer](https://github.com/corneliakelinske/giphy_scraper/actions/workflows/dialyzer.yml/badge.svg)](https://github.com/corneliakelinske/giphy_scraper/actions/workflows/dialyzer.yml)
+[![Credo](https://github.com/corneliakelinske/giphy_scraper/actions/workflows/credo.yml/badge.svg)](https://github.com/corneliakelinske/giphy_scraper/actions/workflows/credo.yml)
+[![Build Status](https://github.com/corneliakelinske/giphy_scraper/actions/workflows/test.yml/badge.svg)](https://github.com/corneliakelinske/giphy_scraper/actions/workflows/test.yml)
 
 ##  How to run this GiphyScraper
 
