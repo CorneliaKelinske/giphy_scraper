@@ -27,3 +27,6 @@ giphy_scraper-*.tar
 
 .envrc
 .elixir_ls
+
+*.plt
+*.plt.hash

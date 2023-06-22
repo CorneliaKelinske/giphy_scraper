@@ -7,12 +7,21 @@ defmodule GiphyScraper.GiphyGetter do
 
   @url "https://api.giphy.com/v1/gifs/search"
   @params %{api_key: nil, q: nil, limit: nil}
+  @defaults_opts [
+    sandbox?: Mix.env() === :test
+  ]
 
-  @spec query_api_and_decode_json_response(String.t(), pos_integer()) ::
+  @spec query_api_and_decode_json_response(String.t(), pos_integer(), keyword()) ::
           {:ok, map} | {:error, error()}
-  def query_api_and_decode_json_response(query, limit \\ 25) do
-    with {:ok, body} <- request_gifs(query, limit) do
-      decode_json(body)
+  def query_api_and_decode_json_response(query, limit \\ 25, opts \\ []) do
+    opts = Keyword.merge(@defaults_opts, opts)
+
+    if opts[:sandbox?] do
+      sandbox_get_response(@url, query, opts)
+    else
+      with {:ok, body} <- request_gifs(query, limit) do
+        decode_json(body)
+      end
     end
   end
 
@@ -35,6 +44,19 @@ defmodule GiphyScraper.GiphyGetter do
     case Jason.decode(body) do
       {:ok, %{"data" => data}} -> {:ok, data}
       _ -> {:error, :not_decoded}
+    end
+  end
+
+  if Mix.env() === :test do
+    defdelegate sandbox_get_response(url, query, opts),
+      to: GiphyScraper.Support.HTTPSandbox,
+      as: :get_response
+  else
+    defp sandbox_get_response(url, _, _) do
+      raise """
+      Cannot use HTTPSandbox outside of test
+      url requested: #{inspect(url)}
+      """
     end
   end
 end
