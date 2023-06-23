@@ -20,9 +20,17 @@ defmodule GiphyScraper.GiphyGetterTest do
 
     test "returns error tuple for invalid request" do
       HTTPSandbox.set_get_responses([SandboxResponses.mock_error_response()])
+
       assert {:error,
-              "{:error, %Mint.HTTPError{reason: {:invalid_request_target, \"/v1/gifs/search?api_key=4zz3hAmMPYfOXbJTvGW7N4AniWFUm4SL&limit=25&q=guinea pig\"}, module: Mint.HTTP1}}"} =
-               GiphyGetter.query_api_and_decode_json_response(@invalid_query, [])
+              %ErrorMessage{
+                code: :bad_request,
+                message: "something went wrong",
+                details: %{
+                  reason:
+                    {:invalid_request_target,
+                     "/v1/gifs/search?api_key=4zz3hAmMPYfOXbJTvGW7N4AniWFUm4SL&limit=1&q=guinea pig"}
+                }
+              }} = GiphyGetter.query_api_and_decode_json_response(@invalid_query, 1)
     end
   end
 
@@ -35,7 +43,15 @@ defmodule GiphyScraper.GiphyGetterTest do
 
     test "returns error tuple for invalid request" do
       assert {:error,
-              "{:error, %Mint.HTTPError{reason: {:invalid_request_target, \"/v1/gifs/search?api_key=4zz3hAmMPYfOXbJTvGW7N4AniWFUm4SL&limit=1&q=guinea pig\"}, module: Mint.HTTP1}}"} =
+              %ErrorMessage{
+                code: :bad_request,
+                message: "something went wrong",
+                details: %{
+                  reason:
+                    {:invalid_request_target,
+                     "/v1/gifs/search?api_key=4zz3hAmMPYfOXbJTvGW7N4AniWFUm4SL&limit=1&q=guinea pig"}
+                }
+              }} =
                GiphyGetter.query_api_and_decode_json_response(@invalid_query, 1, sandbox?: false)
     end
   end

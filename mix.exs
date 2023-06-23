@@ -24,7 +24,6 @@ defmodule GiphyScraper.MixProject do
         "coveralls.html": :test,
         doctor: :test
       ]
-
     ]
   end
 
@@ -49,7 +48,8 @@ defmodule GiphyScraper.MixProject do
       {:credo, "~> 1.6", only: [:test, :dev], runtime: false},
       {:blitz_credo_checks, "~> 0.1", only: [:test, :dev], runtime: false},
       {:finch, "~> 0.13.0"},
-      {:sandbox_registry, "~> 0.1.1"}
+      {:sandbox_registry, "~> 0.1.1"},
+      {:error_message, "~> 0.2.0"}
     ]
   end
 end
