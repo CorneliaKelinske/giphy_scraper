@@ -30,9 +30,17 @@ defmodule GiphyScraper.GiphyGetter do
     |> FinchHelpers.build_query(@url)
     |> Finch.request(GiphyScraper.Finch)
     |> case do
-      {:ok, %Finch.Response{status: 200, body: body}} -> {:ok, body}
-      {:ok, %Finch.Response{status: 401}} -> {:error, :api_key_not_found}
-      error -> {:error, inspect(error)}
+      {:ok, %Finch.Response{status: 200, body: body}} ->
+        {:ok, body}
+
+      {:ok, %Finch.Response{status: 401}} ->
+        {:error, ErrorMessage.unauthorized("no valid API key found")}
+
+      {:error, %Mint.HTTPError{reason: reason}} ->
+        {:error, ErrorMessage.bad_request("something went wrong", %{reason: reason})}
+
+      _ ->
+        {:error, ErrorMessage.internal_server_error("something went wrong")}
     end
   end
 

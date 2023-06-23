@@ -8,7 +8,15 @@ defmodule GiphyScraper.Support.SandboxResponses do
     "title" => "Happy Love You GIF by LINE FRIENDS"
   }
 
-  @error "{:error, %Mint.HTTPError{reason: {:invalid_request_target, \"/v1/gifs/search?api_key=4zz3hAmMPYfOXbJTvGW7N4AniWFUm4SL&limit=25&q=guinea pig\"}, module: Mint.HTTP1}}"
+  @error %ErrorMessage{
+    code: :bad_request,
+    message: "something went wrong",
+    details: %{
+      reason:
+        {:invalid_request_target,
+         "/v1/gifs/search?api_key=4zz3hAmMPYfOXbJTvGW7N4AniWFUm4SL&limit=1&q=guinea pig"}
+    }
+  }
 
   def giphy_url do
     @url

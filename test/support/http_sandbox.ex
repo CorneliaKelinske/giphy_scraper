@@ -8,7 +8,7 @@ defmodule GiphyScraper.Support.HTTPSandbox do
   """
   @registry :http_sandbox
   @keys :unique
-  #context is a sub-key to allow multiple contexts to use the same registry
+  # context is a sub-key to allow multiple contexts to use the same registry
   @context "http"
   @sleep 10
 
